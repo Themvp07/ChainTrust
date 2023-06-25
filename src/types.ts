@@ -21,8 +21,3 @@ export interface IETHTestnetCustomERC20 {
 	value: string;
 	chainId: number;
 }
-
-export enum ChainId {
-	MAINNET=1,
-	SEPOLIA=11155111,
-}

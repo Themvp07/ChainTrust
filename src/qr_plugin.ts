@@ -1,8 +1,14 @@
 import { Web3, Web3PluginBase, validator } from 'web3';
-import { ChainId, IETHMainnet, IETHMainnetCustomERC20, IETHTestnet, IETHTestnetCustomERC20, } from './types';
+import {
+  IETHMainnet,
+  IETHMainnetCustomERC20,
+  IETHTestnet,
+  IETHTestnetCustomERC20,
+} from './types';
 import QRCode from 'qrcode';
+import { ChainId } from './chain-id.enum';
 
-export class QRCodePlugin extends Web3PluginBase {
+export class QRPlugin extends Web3PluginBase {
   public pluginNamespace: string;
 
   public constructor(options?: {
@@ -19,7 +25,7 @@ export class QRCodePlugin extends Web3PluginBase {
    *
    * @returns A QR code as a string, which encodes a URI for an Ethereum transaction on the mainnet according to EIP-681.
    */
-  public async getQrEthereumMainnet(ethMainnetParams: IETHMainnet) {
+  public async getQrEthereumMainnet(ethMainnetParams: IETHMainnet): Promise<string> {
     try {
       const { to, value } = ethMainnetParams;
 
@@ -54,7 +60,7 @@ export class QRCodePlugin extends Web3PluginBase {
    *
    * @returns A QR code as a string, which encodes a URI for an Ethereum transaction on the testnet according to EIP-681.
    */
-  public async getQrEthereumTestnet(ethTestnetParams: IETHTestnet) {
+  public async getQrEthereumTestnet(ethTestnetParams: IETHTestnet): Promise<string> {
     try {
       const { to, value, chainId } = ethTestnetParams;
 
@@ -94,7 +100,7 @@ export class QRCodePlugin extends Web3PluginBase {
    *
    * @returns A QR code as a string, which encodes a URI for an Ethereum transaction on the mainnet for ERC20 according to EIP-681.
    */
-  public async getQrEthereumMainnetCustomERC20(ethMainnetCustomERC20Params: IETHMainnetCustomERC20) {
+  public async getQrEthereumMainnetCustomERC20(ethMainnetCustomERC20Params: IETHMainnetCustomERC20): Promise<string> {
     try {
       const { erc20, to, value } = ethMainnetCustomERC20Params;
 
@@ -134,7 +140,7 @@ export class QRCodePlugin extends Web3PluginBase {
    *
    * @returns A QR code as a string, which encodes a URI for an Ethereum transaction on the testnet for ERC20 according to EIP-681.
    */
-  public async getQrEthereumTestnetCustomERC20(ethTestnetCustomERC20Params: IETHTestnetCustomERC20) {
+  public async getQrEthereumTestnetCustomERC20(ethTestnetCustomERC20Params: IETHTestnetCustomERC20): Promise<string> {
     try {
       const { erc20, to, value, chainId } = ethTestnetCustomERC20Params;
 
@@ -178,6 +184,6 @@ export class QRCodePlugin extends Web3PluginBase {
 // Module Augmentation
 declare module 'web3' {
   interface Web3Context {
-    qrcode: QRCodePlugin;
+    qrcode: QRPlugin;
   }
 }
